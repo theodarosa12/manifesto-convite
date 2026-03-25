@@ -22,7 +22,7 @@ export default function Home() {
         {/* THUMBNAIL */}
         <div className="w-full rounded-2xl overflow-hidden border border-mgt-gray-light shadow-2xl relative">
           <Image
-            src="/thumb.png"
+            src="/THUMBS (29).png"
             alt="Claude + Obsidian + Skills Thumbnail"
             width={1200}
             height={675}
