@@ -20,7 +20,12 @@ export default function Home() {
         </div>
 
         {/* THUMBNAIL */}
-        <div className="w-full rounded-2xl overflow-hidden border border-mgt-gray-light shadow-2xl relative">
+        <a 
+          href="https://calendar.app.google/UqQppipbiv9H4yU17"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full rounded-2xl overflow-hidden border border-mgt-gray-light shadow-2xl relative cursor-pointer"
+        >
           <Image
             src="/THUMBS (29).png"
             alt="Claude + Obsidian + Skills Thumbnail"
@@ -29,7 +34,7 @@ export default function Home() {
             className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
             priority
           />
-        </div>
+        </a>
 
         <div className="h-px w-full bg-mgt-gray-light" />
 
