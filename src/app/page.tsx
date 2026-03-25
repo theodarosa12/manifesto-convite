@@ -19,6 +19,18 @@ export default function Home() {
           </h1>
         </div>
 
+        {/* THUMBNAIL */}
+        <div className="w-full rounded-2xl overflow-hidden border border-mgt-gray-light shadow-2xl relative">
+          <Image
+            src="/thumb.png"
+            alt="Claude + Obsidian + Skills Thumbnail"
+            width={1200}
+            height={675}
+            className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
+            priority
+          />
+        </div>
+
         <div className="h-px w-full bg-mgt-gray-light" />
 
         {/* CORPO DE TEXTO 1 */}
