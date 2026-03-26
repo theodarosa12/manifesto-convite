@@ -63,11 +63,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true, message: 'Dados salvos com sucesso!', etiqueta });
   } catch (error: any) {
     console.error('API Error:', error);
+    const errorInfo = (global as any)._last_key_info || {};
     return NextResponse.json(
       { 
         success: false, 
         message: 'Erro ao salvar os dados.', 
-        error: error.response?.data?.error?.message || error.message 
+        error: `${error.response?.data?.error?.message || error.message} (Dgn: L:${errorInfo.rawLen}/${errorInfo.fmtLen}, H:${errorInfo.hasBegin}, E:${errorInfo.hasEnd}, S:${errorInfo.startsWith})`
       },
       { status: 500 }
     );
