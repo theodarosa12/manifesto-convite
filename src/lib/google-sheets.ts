@@ -4,14 +4,27 @@ export async function appendToSheet(values: any[]) {
   try {
     const rawKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY;
     
-    // Limpeza profunda da chave para evitar erro de DECODER no Vercel
-    const formattedKey = rawKey 
-      ? rawKey
+    let formattedKey: string | undefined = undefined;
+
+    if (rawKey) {
+      // Se não começar com o cabeçalho PEM, tentamos decodificar de Base64 (estratégia blindada)
+      if (!rawKey.includes('-----BEGIN')) {
+        try {
+          formattedKey = Buffer.from(rawKey, 'base64').toString('utf8');
+        } catch (e) {
+          console.error('Falha ao decodificar chave Base64, tentando limpeza PEM...');
+        }
+      }
+
+      // Se ainda não temos a chave formatada ou se a decodificação falhou
+      if (!formattedKey || !formattedKey.includes('-----BEGIN')) {
+        formattedKey = rawKey
           .replace(/^"|"$/g, '')             // Remove aspas externas
           .replace(/\\n/g, '\n')            // Converte \n literal em quebra de linha
           .replace(/\r/g, '')               // Remove retornos de carro
-          .trim()                           // Remove espaços em branco nas extremidades
-      : undefined;
+          .trim();
+      }
+    }
 
     const auth = new google.auth.GoogleAuth({
       credentials: {
