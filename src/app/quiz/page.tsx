@@ -91,10 +91,12 @@ export default function QuizPage() {
           window.location.href = "https://calendar.app.google/UqQppipbiv9H4yU17";
         }, 3000);
       } else {
-        alert('Erro ao salvar respostas. Tente novamente.');
+        const result = await response.json();
+        alert(`Erro ao salvar respostas: ${result.error || 'Erro inesperado'}. Tente novamente.`);
         setIsSubmitting(false);
       }
-    } catch (error) {
+    } catch (error: any) {
+      alert(`Erro técnico na requisição: ${error.message}`);
       console.error(error);
       setIsSubmitting(false);
     }

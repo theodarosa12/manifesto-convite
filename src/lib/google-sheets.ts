@@ -2,10 +2,15 @@ import { google } from 'googleapis';
 
 export async function appendToSheet(values: any[]) {
   try {
+    const rawKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY;
+    const formattedKey = rawKey 
+      ? rawKey.replace(/^"|"$/g, '').replace(/\\n/g, '\n')
+      : undefined;
+
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+        private_key: formattedKey,
       },
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
@@ -15,7 +20,7 @@ export async function appendToSheet(values: any[]) {
 
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: 'Sheet1!A:Z', // Certifique-se de que a aba da planilha se chama 'Sheet1' ou mude aqui
+      range: 'Página1!A:Z', // Certifique-se de que a aba da planilha se chama 'Página1' ou mude aqui
       valueInputOption: 'USER_ENTERED',
       requestBody: {
         values: [values],
