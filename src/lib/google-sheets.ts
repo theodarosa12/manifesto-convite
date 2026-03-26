@@ -3,8 +3,14 @@ import { google } from 'googleapis';
 export async function appendToSheet(values: any[]) {
   try {
     const rawKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY;
+    
+    // Limpeza profunda da chave para evitar erro de DECODER no Vercel
     const formattedKey = rawKey 
-      ? rawKey.replace(/^"|"$/g, '').replace(/\\n/g, '\n')
+      ? rawKey
+          .replace(/^"|"$/g, '')             // Remove aspas externas
+          .replace(/\\n/g, '\n')            // Converte \n literal em quebra de linha
+          .replace(/\r/g, '')               // Remove retornos de carro
+          .trim()                           // Remove espaços em branco nas extremidades
       : undefined;
 
     const auth = new google.auth.GoogleAuth({
